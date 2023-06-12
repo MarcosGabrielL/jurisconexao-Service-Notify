@@ -13,10 +13,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "Notification")
 public class Notification {
@@ -39,6 +36,70 @@ public class Notification {
     private String usuario;
 	 @Column(nullable = false, unique = false, length = 30)
 	private boolean isRead;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getCod() {
+		return cod;
+	}
+	public void setCod(String cod) {
+		this.cod = cod;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public boolean isRead() {
+		return isRead;
+	}
+	public void setRead(boolean isRead) {
+		this.isRead = isRead;
+	}
+	public Notification(Long id, String message, String info, String date, String cod, String level, String usuario,
+			boolean isRead) {
+		super();
+		this.id = id;
+		this.message = message;
+		this.info = info;
+		this.date = date;
+		this.cod = cod;
+		this.level = level;
+		this.usuario = usuario;
+		this.isRead = isRead;
+	}
+	public Notification() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
        
 
 

@@ -4,12 +4,16 @@ package br.com.jurisconexao.notify.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
+import org.springframework.messaging.handler.annotation.SendTo;
+import org.springframework.messaging.simp.SimpMessageHeaderAccessor;
 import org.springframework.web.bind.annotation.*;
 
-import br.com.jurisconexao.notify.PasswordReset.PasswordResetServices;
-import br.com.jurisconexao.notify.PasswordReset.PasswordResetToken;
 import br.com.jurisconexao.notify.enums.EmailSender;
 import br.com.jurisconexao.notify.enums.Emails;
+import br.com.jurisconexao.notify.models.Notification;
+import br.com.jurisconexao.notify.services.NotificationService;
 
 
 @CrossOrigin(origins = "http://localhost:4200")
@@ -20,7 +24,7 @@ public class EmailController {
     private EmailSender emailSender;
      
     @Autowired
-    private PasswordResetServices customerService;
+    private NotificationService notificationService;
     
    
    
@@ -47,33 +51,8 @@ public String processForgotPassword( @RequestParam("email") String email,   @Req
          
     return message;
 }
-     
-     
-     
- 
-     
-    @PostMapping("/reset_password")
-public String processResetPassword(@RequestParam("token") String token,
-            @RequestParam("email") String email, @RequestParam("password") String password) {
-    
-    String message = "You have successfully changed your password.";
-    
-    //Verifica se token existe
-    PasswordResetToken customer = customerService.getByResetPasswordToken(token);
-    
-     if (customer == null) {
-        return "Invalid Token";
-     } else {   
-         
-     
-         
-     }
-     
-    return message;
-}
    
     
-    @CrossOrigin(origins = "http://localhost:4200/")
     @PostMapping("/sendingemail")
    public String generateEmail( @RequestParam("token") String token,
            @RequestParam("email") String email, @RequestParam("email") String nome) throws Exception {
@@ -87,6 +66,26 @@ public String processResetPassword(@RequestParam("token") String token,
        return link;
        
    }
+    
+   
+    
+    @MessageMapping("/sendingNotify")
+    @SendTo("/topic/group")
+    public Notification broadcastGroupMessage(@Payload Notification message) {
+    	notificationService.addNotification(message);
+    	
+        return message;
+    }
+
+    @MessageMapping("/notify.addUser")
+    @SendTo("/topic/public")
+    public Notification addUser(
+            @Payload Notification notification,
+            SimpMessageHeaderAccessor headerAccessor
+    ) {
+        headerAccessor.getSessionAttributes().put("username", notification);
+        return notification;
+    }
     
 }
 

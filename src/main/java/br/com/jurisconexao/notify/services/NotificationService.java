@@ -4,7 +4,6 @@
  */
 package br.com.jurisconexao.notify.services;
 
-import br.com.jurisconexao.notify.exception.UserNotFoundException;
 import br.com.jurisconexao.notify.models.Notification;
 import br.com.jurisconexao.notify.repositories.NotificationRopository;
 
@@ -21,38 +20,37 @@ import org.springframework.stereotype.Service;
 @Service
 public class NotificationService {
     
-	 @Autowired
-	    private NotificationRopository rp;
-	 
-	
-	    
-	     public List<Notification> findAll() {
-	        return rp.findAll();
-	    }
-	     
-	     public Notification findNotificationById(Long id) {
-	        return rp.findNotificationById(id)
-	                .orElseThrow(() -> new UserNotFoundException("Notification by id " + id + " was not found"));
-	    }
-	     
-	     
-	     
-	     public Notification addNotification(Notification cinefilo) {
-	        return rp.save(cinefilo);
-	    }
-	     
-	      public Notification updateNotification(Notification cinefilo) {
-	        return rp.save(cinefilo);
-	    }
-	      
-	      public void deleteNotification(Long id){
-	        try{
-	          rp.deleteNotificationById(id);  
-	        }catch(DataIntegrityViolationException e){
-	            throw new DataIntegrityViolationException(
-	                    "Não foi possivel deletar o Notification");
-	        }
-	    }
+	@Autowired
+    private NotificationRopository rp;
     
+     public List<Notification> findAll() {
+        return rp.findAll();
+    }
+     
+     public Notification findNotificationById(Long id) {
+        return rp.findNotificationById(id);
+    }
+    
+     public List<Notification> userNotification(String id) {
+        return rp.userNotification(id);
+    }
+    
+     
+     public Notification addNotification(Notification cinefilo) {
+        return rp.save(cinefilo);
+    }
+     
+      public Notification updateNotification(Notification cinefilo) {
+        return rp.save(cinefilo);
+    }
+      
+      public void deleteNotification(Long id){
+        try{
+          rp.deleteNotificationById(id);  
+        }catch(DataIntegrityViolationException e){
+            throw new DataIntegrityViolationException(
+                    "Não foi possivel deletar o Notification");
+        }
+    }
     
 }

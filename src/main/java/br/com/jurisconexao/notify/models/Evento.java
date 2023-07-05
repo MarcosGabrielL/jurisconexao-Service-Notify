@@ -11,10 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Entity
 @Table(name = "Evento")
 public class Evento {
@@ -47,6 +44,67 @@ public class Evento {
     //Email
      @Column(nullable = false, unique = false, length = 30)
     private String usuario;
+	public Long getId() {
+		return id;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public String getInfo() {
+		return info;
+	}
+	public void setInfo(String info) {
+		this.info = info;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getCod() {
+		return cod;
+	}
+	public void setCod(String cod) {
+		this.cod = cod;
+	}
+	public String getLevel() {
+		return level;
+	}
+	public void setLevel(String level) {
+		this.level = level;
+	}
+	public String getUsuario() {
+		return usuario;
+	}
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
+	}
+	public Evento(Long id, String message, String info, String date, String cod, String level, String usuario) {
+		super();
+		this.id = id;
+		this.message = message;
+		this.info = info;
+		this.date = date;
+		this.cod = cod;
+		this.level = level;
+		this.usuario = usuario;
+	}
+	public Evento() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "Evento [id=" + id + ", message=" + message + ", info=" + info + ", date=" + date + ", cod=" + cod
+				+ ", level=" + level + ", usuario=" + usuario + "]";
+	}
 
    
     

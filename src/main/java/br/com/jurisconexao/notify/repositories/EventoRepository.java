@@ -4,29 +4,27 @@
  */
 package br.com.jurisconexao.notify.repositories;
 
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import br.com.jurisconexao.notify.models.Notification;
-
+import br.com.jurisconexao.notify.models.Evento;
 
 /**
  *
  * @author Marcos
  */
 @Repository
-public interface NotificationRopository extends JpaRepository<Notification, Long> {
+public interface EventoRepository extends JpaRepository<Evento, Long> {
     
-	Notification findNotificationById(Long id);
+      @Query("SELECT u FROM Evento u WHERE u.usuario = ?1 order by u.date")
+      List<Evento> findByEmail(String usuario);
+    
+     Optional<Evento> findEventoById(Long id);
+     
+     void deleteEventoById(Long id);
 
-	@Query("select n from Notification n where n.usuario = ?1 and n.isRead = false ORDER BY n.date DESC")
-	List<Notification> userNotification(String userId);
-
-	 void deleteNotificationById(Long id);
-   
-
-	
 }
